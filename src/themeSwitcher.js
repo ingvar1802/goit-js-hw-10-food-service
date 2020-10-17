@@ -1,42 +1,23 @@
-const refs = {
-  body: document.querySelector('body'),
-  switch: document.querySelector('.js-switch-input'),
-};
-
+const body = document.querySelector('body');
+const switcher = document.querySelector(".theme-switch__toggle");
 const Theme = {
   LIGHT: 'light-theme',
   DARK: 'dark-theme',
 };
 
-refs.switch.addEventListener('change', setClassList);
-refs.switch.addEventListener('change', setLocalStorage);
+switcher.addEventListener('click', setTheme);
+switcher.checked = false;
 
-function setClassList(e) {
-  const check = refs.switch.checked;
-
-  if (check) {
-    refs.body.classList.add(Theme.DARK);
-    refs.body.classList.remove(Theme.LIGHT);
-  } else {
-    refs.body.classList.add(Theme.LIGHT);
-    refs.body.classList.remove(Theme.DARK);
+function setTheme() {
+  if (this.checked) {
+    body.classList.remove(Theme.LIGHT);
+    body.classList.add(Theme.DARK)
+    localStorage.setItem("theme", "dark-theme")
   }
-}
 
-function setLocalStorage(e) {
-  const check = refs.switch.checked;
-
-  if (check) {
-    localStorage.setItem('theme', Theme.DARK);
-  } else {
-    localStorage.removeItem('theme');
-    localStorage.setItem('theme', Theme.LIGHT);
+  else {
+    body.classList.remove(Theme.DARK);
+    body.classList.add(Theme.LIGHT)
+    localStorage.setItem("theme", "light-theme")
   }
-}
-
-const themeInLocal = localStorage.getItem('theme');
-
-if (themeInLocal === Theme.DARK) {
-  refs.body.classList.add(Theme.DARK);
-  refs.switch.checked = true;
-}
+ };
